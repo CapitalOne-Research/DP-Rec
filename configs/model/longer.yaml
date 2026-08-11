@@ -1,0 +1,31 @@
+# @package _global_
+
+train_dir: longer
+
+model_args:
+  name: longer
+  backbone: longer
+  maxlen: 200
+  dropout_rate: 0.0
+  hidden_units: 64
+  num_heads: 1
+  num_blocks: 3              # number of self-causal attention layers
+  #num_recent_tokens: 10      # recent tokens for query matrix O
+  inner_trans:
+    dim: 32                  # d_model for InnerTrans 
+    num_blocks: 1            # transformer blocks in InnerTrans
+    num_heads: 1             # attention heads in InnerTrans
+  use_abs_time_diff: true       # enable absolute time-difference feature
+  time_emb_dim: 16              # dimension per time component (hours, days, weeks)
+  max_weeks: 52                 # cap weeks at this value
+  l2_emb: 0.0
+
+training_args:
+  expected_patches: 2       # number of groups/patches (group_size = maxlen / expected_patches)
+  batch_size: 128
+  lr: 0.001
+  loss: bpr
+  num_epochs: 500
+  device: cuda
+  eval_neg_sample: 1000
+  val_interval: 10

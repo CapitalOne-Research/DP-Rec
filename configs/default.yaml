@@ -1,0 +1,38 @@
+training_args:
+  selection_criteria: HR@10 # TODO implement
+  loss: bpr # bpr or bce
+  eval_neg_sample: 1
+  eval_max_users_valid: null # set to integer to limit validation users, null for all users
+  eval_max_users_test: null # set to integer to limit test users, null for all users
+  val_interval: 0.5 # validate every N epochs if >= 1, or as percent of num_epochs if < 1
+
+model_args:
+  l2_emb: 0.0
+  model_dtype: fp32 # bf16 (default), fp32, or fp16
+
+defaults:
+  - _self_
+  - model: sasrec
+
+# Experiment paths: model name will be {backbone}_{model_suffix}_{dataset}_{hash}
+experiment_folder: ""  # required for train
+model_suffix: ""       # required for train
+dataset: ???
+
+device: cuda
+task: train # {train, inference_only}
+local: true # automatically set
+
+# Paths
+local_data_dir: ../data/
+model_dir: null # path to saved model directory (required for inference task)
+results_dir: null # path to save inference results, defaults to model_dir if null
+local_output_dir: exp/${experiment_folder}/
+
+
+# Hydra outputs
+hydra:
+  run:
+    dir: outputs/exp/${now:%Y-%m-%d_%H-%M-%S}
+  job:
+    chdir: false
