@@ -1,0 +1,14 @@
+torch
+numpy
+pandas
+tqdm
+omegaconf
+hydra-core
+s3fs>=2023.1.0
+calflops
+rectools
+pytorch-lightning
+matplotlib
+ipywidgets
+ipykernel
+pytest

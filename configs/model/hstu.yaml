@@ -1,0 +1,31 @@
+# @package _global_
+# Configuration matching RecTools HSTU tutorial
+# See: RecTools/examples/tutorials/transformers_HSTU_tutorial.ipynb
+
+train_dir: hstu
+
+model_args:
+  name: hstu
+  backbone: hstu
+  maxlen: 200
+  dropout_rate: 0.0
+  hidden_units: 64
+  num_heads: 1
+  num_blocks: 3
+  relative_time_attention: true
+  relative_pos_attention: true
+  use_pos_emb: true
+  use_scale_factor: true
+  attn_dropout_rate: 0.0
+  similarity: dot
+  l2_emb: 0.0
+
+training_args:
+  batch_size: 128
+  lr: 0.001
+  loss: bpr
+  num_negatives: 1
+  num_epochs: 500
+  device: cuda
+  eval_neg_sample: 1000
+  val_interval: 10

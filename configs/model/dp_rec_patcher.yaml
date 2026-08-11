@@ -1,0 +1,25 @@
+# @package _global_
+
+train_dir: dp_rec
+
+model_args:
+  name: dp_rec_patcher
+  backbone: dp_rec
+  train_patcher: true
+  maxlen: 200
+  dropout_rate: 0.0
+  hidden_units: 8
+  num_heads: 1
+  num_blocks: 1
+  use_rope: true
+  use_time_rope: true
+  sliding_window: 32
+
+training_args:
+  batch_size: 128
+  lr: 0.001
+  loss: bpr
+  num_epochs: 500
+  device: cuda
+  eval_neg_sample: 1000
+  val_interval: 10

@@ -1,0 +1,42 @@
+# @package _global_
+
+train_dir: dp_rec
+patcher_model_path: ??? # required: path to pre-trained BehavioralBoundaryModel checkpoint dir
+
+model_args:
+  name: dp_rec
+  backbone: dp_rec
+  train_patcher: false
+  maxlen: 200
+  hidden_units: 64      
+  num_heads: 1           
+  num_blocks: 3         
+  dropout_rate: 0.0
+  use_rope: true
+  use_time_rope: true
+  sliding_window: 32     # attn_window for encoder, decoder, and boundary model
+  use_cross_attention: true  # if true: per-layer cross-attn in encoder/decoder; if false: gather-add
+  cross_attention_k: 8     # latent states per patch (1 = one global vector per segment)
+  cross_attn_init_by_pooling: true  # init segment queries from max-pooled tokens before cross-attn
+
+  local_encoder:
+    num_blocks: 1
+    hidden_units: 32
+    num_heads: 1
+    maxlen: 200
+
+  local_decoder:
+    num_blocks: 1
+    hidden_units: 32
+    num_heads: 1
+    maxlen: 200
+
+training_args:
+  batch_size: 128
+  lr: 0.001
+  loss: bpr
+  num_epochs: 500
+  device: cuda
+  eval_neg_sample: 1000
+  expected_patches: 2   # target segments per sequence for entropy patching
+  val_interval: 10

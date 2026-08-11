@@ -1,0 +1,42 @@
+# @package _global_
+
+train_dir: dp_rec
+
+model_args:
+  name: dp_rec_fixed
+  backbone: dp_rec
+  patching_strategy: fixed   # fixed-count: slice each sequence into ~expected_patches equal patches
+  train_patcher: false
+  maxlen: 200
+  hidden_units: 64
+  num_heads: 1
+  num_blocks: 3
+  dropout_rate: 0.0
+  use_rope: true
+  use_time_rope: true
+  sliding_window: 32
+  use_cross_attention: true
+  cross_attention_k: 8
+  cross_attn_init_by_pooling: true
+
+  local_encoder:
+    num_blocks: 1
+    hidden_units: 32
+    num_heads: 1
+    maxlen: 200
+
+  local_decoder:
+    num_blocks: 1
+    hidden_units: 32
+    num_heads: 1
+    maxlen: 200
+
+training_args:
+  batch_size: 128
+  lr: 0.001
+  loss: bpr
+  num_epochs: 500
+  device: cuda
+  eval_neg_sample: 1000
+  expected_patches: 2   # target patch count per sequence
+  val_interval: 10
